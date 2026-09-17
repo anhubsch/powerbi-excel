@@ -48,7 +48,7 @@ that grounds later labs against something that isn't made up.
 
 ```mermaid
 flowchart LR
-    A[Excel RAND/RANDBETWEEN<br/>formulas] --> B[fact_appointments<br/>~20k synthetic rows]
+    A[Excel RAND/RANDBETWEEN<br/>formulas] --> B[raw_appointments<br/>~20k synthetic rows]
     C[NHS England A&E<br/>timeseries.xlsx] --> D[Power Query]
     B --> D
     D --> E[Fix types<br/>remove blanks]

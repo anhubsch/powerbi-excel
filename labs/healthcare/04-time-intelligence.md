@@ -191,24 +191,28 @@ are the expected shape here, not a sign of a broken measure.
 
 ```dax
 NHS 4-Hour Breach % =
-CALCULATE(
-    AVERAGE( nhs_benchmark[PctOver4Hours] ),
+1 - CALCULATE(
+    AVERAGE( nhs_benchmark[PctWithin4Hours] ),
     ALLSELECTED( nhs_benchmark )
 )
 ```
 
-The exact column name depends on how the NHS sheet's percentage-within/
-over-4-hours field was labelled during Lab 01 Part 2. Adjust
-`PctOver4Hours` to match what Power Query produced.
+Lab 01 Part 2 loads the NHS sheet's "% in 4 hours or less" column exactly
+as published, a *within*-4-hours framing, not a breach figure. This
+measure is named for the breach rate, so it inverts that fraction; the
+column name itself, `PctWithin4Hours`, may differ slightly depending on
+how Power Query auto-cleaned the real file's header during Lab 01. Adjust
+it to match whatever your own `nhs_benchmark` table actually holds, but
+keep the inversion regardless of what the column ends up called.
 
 <details>
 <summary>Hint</summary>
 
-If the NHS file's column tracked attendances *within* four hours rather
-than *over*, this measure needs `1 - AVERAGE(...)` to represent a breach
-rate, or a rename of the measure to match what it actually calculates.
 Check which framing Lab 01 Part 2 Step 2 actually loaded before assuming
-the column name is the only thing to adjust.
+the column name is the only thing to adjust. If your `nhs_benchmark`
+table ended up with a genuine breach/over-4-hours percentage instead
+(some published NHS extracts report it that way), drop the `1 -` and
+average the column directly.
 
 </details>
 

@@ -76,7 +76,7 @@ flowchart LR
     A[Lab 05 model<br/>fact_orders, GBP] --> H[Calculation group:<br/>Channel Scope]
     B[marketplace-orders-synthetic.csv<br/>EUR, SYNTHETIC] --> C[Power Query]
     C --> D[fact_orders_marketplace]
-    E[fx-rates-synthetic.csv<br/>SYNTHETIC] --> F[dim_fx_rate]
+    E[fx-rates-synthetic.csv<br/>SYNTHETIC] --> F[fx-rates-synthetic]
     D --> F
     D --> H
     A --> H
@@ -308,7 +308,6 @@ calculation group named `Channel Scope`, with three calculation items:
 // Calculation item: Direct
 CALCULATE(
     SELECTEDMEASURE(),
-    REMOVEFILTERS( fact_orders_marketplace ),
     fact_orders_marketplace[StockCode] = BLANK()
 )
 ```
@@ -319,8 +318,13 @@ CALCULATE(
 The `Direct` and `Marketplace` items each need to force the base measure
 to evaluate against only one fact table's rows, without a direct
 relationship between the two fact tables to lean on. The reliable pattern
-is `CALCULATE(SELECTEDMEASURE(), <table>[somecolumn] = BLANK())`, which
-works because a base measure summing `fact_orders_marketplace` naturally
+is `CALCULATE(SELECTEDMEASURE(), <table>[somecolumn] = BLANK())` on its
+own, no `REMOVEFILTERS` needed alongside it: a row filter that keeps zero
+rows already overrides whatever filters were there before, so adding
+`REMOVEFILTERS(fact_orders_marketplace)` first doesn't change the result,
+it just reads as if two contradictory instructions were given in the same
+call. The `<table>[somecolumn] = BLANK()` filter alone is what does the
+work, because a base measure summing `fact_orders_marketplace` naturally
 returns blank once every row of that table is filtered out. The
 `Marketplace` item is the mirror image, filtering `fact_orders` down to
 nothing instead. `Combined` needs no filter argument at all: it's just

@@ -22,7 +22,7 @@ between real clients or projects actually feels like.
 | [University](labs/university/) | Enrollment and library-usage records | — | Fully synthetic, generated in Lab 01, deliberately carries no PII |
 | [Healthcare](labs/healthcare/) | Hospital appointment operations + NHS England A&E benchmark | OGL v3.0 (NHS data) | Synthetic appointments, real NHS trust-level benchmark data |
 | [Libraries](labs/libraries/) | Seattle Public Library checkouts by title | Public / open (data.gov) | Real |
-| [Retail](labs/retail/) | UCI Online Retail, UK e-commerce transactions | CC BY 4.0 | Real, with a small synthetic inventory table |
+| [Retail](labs/retail/) | UCI Online Retail, UK e-commerce transactions | CC BY 4.0 | Real, with a synthetic inventory table and, from Lab 06, a synthetic second sales channel |
 
 ## The six labs, every time
 
